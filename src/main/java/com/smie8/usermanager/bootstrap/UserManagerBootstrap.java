@@ -1,20 +1,20 @@
-package com.smie8.usermanagementrestservice.bootstrap;
+package com.smie8.usermanager.bootstrap;
 
-import com.smie8.usermanagementrestservice.model.User;
-import com.smie8.usermanagementrestservice.model.UserGroup;
-import com.smie8.usermanagementrestservice.service.UserGroupService;
-import com.smie8.usermanagementrestservice.service.UserService;
+import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.model.UserGroup;
+import com.smie8.usermanager.service.UserGroupService;
+import com.smie8.usermanager.service.UserService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserManagementRestServiceBootstrap {
+public class UserManagerBootstrap {
 
     private final UserService userService;
     private final UserGroupService userGroupService;
 
-    public UserManagementRestServiceBootstrap(UserService userService, UserGroupService userGroupService) {
+    public UserManagerBootstrap(UserService userService, UserGroupService userGroupService) {
         this.userService = userService;
         this.userGroupService = userGroupService;
     }

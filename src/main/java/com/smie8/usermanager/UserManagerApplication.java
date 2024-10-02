@@ -1,13 +1,13 @@
-package com.smie8.usermanagementrestservice;
+package com.smie8.usermanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserManagementRestServiceApplication {
+public class UserManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserManagementRestServiceApplication.class, args);
+		SpringApplication.run(UserManagerApplication.class, args);
 	}
 
 }

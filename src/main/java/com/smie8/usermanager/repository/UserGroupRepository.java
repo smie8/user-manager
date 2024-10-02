@@ -1,6 +1,6 @@
-package com.smie8.usermanagementrestservice.repository;
+package com.smie8.usermanager.repository;
 
-import com.smie8.usermanagementrestservice.model.UserGroup;
+import com.smie8.usermanager.model.UserGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

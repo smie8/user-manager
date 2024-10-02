@@ -1,9 +1,9 @@
-package com.smie8.usermanagementrestservice.service;
+package com.smie8.usermanager.service;
 
-import com.smie8.usermanagementrestservice.model.User;
-import com.smie8.usermanagementrestservice.model.UserGroup;
-import com.smie8.usermanagementrestservice.repository.UserGroupRepository;
-import com.smie8.usermanagementrestservice.repository.UserRepository;
+import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.model.UserGroup;
+import com.smie8.usermanager.repository.UserGroupRepository;
+import com.smie8.usermanager.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
-package com.smie8.usermanagementrestservice.service;
+package com.smie8.usermanager.service;
 
-import com.smie8.usermanagementrestservice.model.User;
-import com.smie8.usermanagementrestservice.repository.UserRepository;
+import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

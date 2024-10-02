@@ -1,4 +1,4 @@
-package com.smie8.usermanagementrestservice.exception;
+package com.smie8.usermanager.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

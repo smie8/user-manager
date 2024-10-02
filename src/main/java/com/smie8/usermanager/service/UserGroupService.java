@@ -1,6 +1,6 @@
-package com.smie8.usermanagementrestservice.service;
+package com.smie8.usermanager.service;
 
-import com.smie8.usermanagementrestservice.model.UserGroup;
+import com.smie8.usermanager.model.UserGroup;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.smie8.usermanagementrestservice.model;
+package com.smie8.usermanager.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

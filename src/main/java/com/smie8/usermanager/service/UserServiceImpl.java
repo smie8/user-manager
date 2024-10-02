@@ -1,11 +1,11 @@
-package com.smie8.usermanagementrestservice.service;
+package com.smie8.usermanager.service;
 
-import com.smie8.usermanagementrestservice.exception.UserGroupNotFoundException;
-import com.smie8.usermanagementrestservice.model.User;
-import com.smie8.usermanagementrestservice.model.UserGroup;
-import com.smie8.usermanagementrestservice.repository.UserGroupRepository;
-import com.smie8.usermanagementrestservice.repository.UserRepository;
-import com.smie8.usermanagementrestservice.exception.UserNotFoundException;
+import com.smie8.usermanager.exception.UserGroupNotFoundException;
+import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.model.UserGroup;
+import com.smie8.usermanager.repository.UserGroupRepository;
+import com.smie8.usermanager.repository.UserRepository;
+import com.smie8.usermanager.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

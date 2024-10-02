@@ -1,4 +1,4 @@
-package com.smie8.usermanagementrestservice.exception;
+package com.smie8.usermanager.exception;
 
 public class UserGroupNotFoundException extends RuntimeException {
 

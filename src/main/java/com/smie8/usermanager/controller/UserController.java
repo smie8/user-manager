@@ -1,8 +1,7 @@
-package com.smie8.usermanagementrestservice.controller;
+package com.smie8.usermanager.controller;
 
-import com.smie8.usermanagementrestservice.model.User;
-import com.smie8.usermanagementrestservice.service.UserService;
-import com.smie8.usermanagementrestservice.exception.UserNotFoundException;
+import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
