@@ -1,4 +1,4 @@
-package com.smie8.user_management_rest_service;
+package com.smie8.usermanagementrestservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
