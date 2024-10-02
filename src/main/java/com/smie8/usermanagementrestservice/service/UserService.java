@@ -15,4 +15,7 @@ public interface UserService {
     User updateUser(User user);
 
     void deleteUser(Long id);
+
+    void addUserToGroup(Long userId, Long groupId);
+    void removeUserFromGroup(Long userId, Long groupId);
 }

@@ -42,7 +42,6 @@ class UserGroupServiceImplTest {
         userGroup = new UserGroup();
         userGroup.setId(USER_GROUP_ID);
         userGroup.setName("Group");
-        userGroup.getUsers().add(user); // Add user to the group
     }
 
     @Test
@@ -139,8 +138,10 @@ class UserGroupServiceImplTest {
 
     @Test
     public void testRemoveUserFromGroup() {
+        // First add user to group
+        userGroup.getUsers().add(user);
         assert(userGroup.getUsers().contains(user));
-        assert(!userGroup.getUsers().isEmpty());
+
         when(userRepository.findById(USER_GROUP_ID)).thenReturn(Optional.of(user));
         when(userGroupRepository.findById(USER_ID)).thenReturn(Optional.of(userGroup));
 

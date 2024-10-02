@@ -20,8 +20,11 @@ public class User {
 
     private Timestamp creationTime;
 
+    private Timestamp lastUpdateTime;
+
     public User() {
         this.creationTime = new Timestamp(System.currentTimeMillis());
+        this.lastUpdateTime = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {
@@ -42,5 +45,17 @@ public class User {
 
     public Timestamp getCreationTime() {
         return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Timestamp getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Timestamp lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

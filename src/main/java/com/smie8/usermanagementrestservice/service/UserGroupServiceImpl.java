@@ -9,6 +9,7 @@ import com.smie8.usermanagementrestservice.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,8 +63,14 @@ public class UserGroupServiceImpl implements UserGroupService {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         UserGroup userGroup = userGroupRepository.findById(groupId).orElseThrow(() -> new UserGroupNotFoundException(groupId));
-        userGroup.getUsers().add(user);
-        userGroupRepository.save(userGroup);
+
+        if (!userGroup.getUsers().contains(user)) {
+            userGroup.getUsers().add(user);
+            userGroup.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
+            userGroupRepository.save(userGroup);
+        } else {
+            throw new IllegalArgumentException("User is already in the group");
+        }
     }
 
     @Override
@@ -72,7 +79,9 @@ public class UserGroupServiceImpl implements UserGroupService {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         UserGroup userGroup = userGroupRepository.findById(groupId).orElseThrow(() -> new UserGroupNotFoundException(groupId));
+
         userGroup.getUsers().remove(user);
+        userGroup.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
         userGroupRepository.save(userGroup);
     }
 

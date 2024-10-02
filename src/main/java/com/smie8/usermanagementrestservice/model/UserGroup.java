@@ -36,6 +36,7 @@ public class UserGroup {
 
     public UserGroup() {
         this.creationTime = new Timestamp(System.currentTimeMillis());
+        this.lastUpdateTime = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {

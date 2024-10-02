@@ -1,11 +1,15 @@
 package com.smie8.usermanagementrestservice.service;
 
+import com.smie8.usermanagementrestservice.exception.UserGroupNotFoundException;
 import com.smie8.usermanagementrestservice.model.User;
+import com.smie8.usermanagementrestservice.model.UserGroup;
+import com.smie8.usermanagementrestservice.repository.UserGroupRepository;
 import com.smie8.usermanagementrestservice.repository.UserRepository;
 import com.smie8.usermanagementrestservice.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +18,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserGroupRepository userGroupRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserGroupRepository userGroupRepository) {
         this.userRepository = userRepository;
+        this.userGroupRepository = userGroupRepository;
     }
 
     @Override
@@ -45,6 +51,7 @@ public class UserServiceImpl implements UserService {
         if (!userRepository.existsById(user.getId())) {
             throw new UserNotFoundException(user.getId());
         }
+        user.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
         return userRepository.save(user);
     }
 
@@ -57,5 +64,43 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void addUserToGroup(Long userId, Long groupId) {
+        validateUserAndGroupId(userId, groupId);
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        UserGroup userGroup = userGroupRepository.findById(groupId).orElseThrow(() -> new UserGroupNotFoundException(groupId));
+
+        if (!userGroup.getUsers().contains(user)) {
+            userGroup.getUsers().add(user);
+            userGroup.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
+            userGroupRepository.save(userGroup);
+        } else {
+            throw new IllegalArgumentException("User is already in the group");
+        }
+    }
+
+    @Override
+    public void removeUserFromGroup(Long userId, Long groupId) {
+        validateUserAndGroupId(userId, groupId);
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        UserGroup userGroup = userGroupRepository.findById(groupId).orElseThrow(() -> new UserGroupNotFoundException(groupId));
+
+        userGroup.getUsers().remove(user);
+        userGroup.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
+        userGroupRepository.save(userGroup);
+    }
+
+    private static void validateUserAndGroupId(Long userId, Long groupId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id cannot be null");
+        }
+
+        if (groupId == null) {
+            throw new IllegalArgumentException("Group id cannot be null");
+        }
     }
 }

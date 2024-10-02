@@ -46,6 +46,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
+    @PostMapping(BASE_URL + "/{userId}/groups/{groupId}")
+    public ResponseEntity<Void> addUserToGroup(@PathVariable Long userId, @PathVariable Long groupId) {
+        userService.addUserToGroup(userId, groupId);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping(BASE_URL + "/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         if (!id.equals(user.getId())) {
@@ -59,6 +65,12 @@ public class UserController {
     @DeleteMapping(BASE_URL + "/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(BASE_URL + "/{userId}/groups/{groupId}")
+    public ResponseEntity<Void> removeUserFromGroup(@PathVariable Long userId, @PathVariable Long groupId) {
+        userService.removeUserFromGroup(userId, groupId);
         return ResponseEntity.ok().build();
     }
 }
