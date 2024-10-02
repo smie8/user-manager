@@ -4,10 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -19,10 +21,6 @@ public class User {
     private Timestamp creationTime;
 
     public User() {
-        this.creationTime = new Timestamp(System.currentTimeMillis());
-    }
-
-    public User(Timestamp creationTime) {
         this.creationTime = new Timestamp(System.currentTimeMillis());
     }
 
