@@ -20,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("${api.version.prefix}")
 public class UserController {
+
     public static final String BASE_URL = "/user";
 
     private final UserService userService;
@@ -51,23 +52,13 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
-        try {
-            User updatedUser = userService.updateUser(user);
-            return ResponseEntity.ok(updatedUser);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        User updatedUser = userService.updateUser(user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping(BASE_URL + "/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -20,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("${api.version.prefix}")
 public class UserGroupController {
+
     private static final String BASE_URL = "/usergroup";
 
     private final UserGroupService userGroupService;
@@ -47,61 +48,31 @@ public class UserGroupController {
 
     @DeleteMapping(BASE_URL + "/{id}")
     public ResponseEntity<Void> deleteUserGroup(@PathVariable Long id) {
-        try {
-            userGroupService.deleteUserGroup(id);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserGroupNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userGroupService.deleteUserGroup(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(BASE_URL + "/{groupId}/users/{userId}")
     public ResponseEntity<Void> addUserToGroup(@PathVariable Long userId, @PathVariable Long groupId) {
-        try {
-            userGroupService.addUserToGroup(userId, groupId);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserNotFoundException | UserGroupNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userGroupService.addUserToGroup(userId, groupId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(BASE_URL + "/{groupId}/users/{userId}")
     public ResponseEntity<Void> removeUserFromGroup(@PathVariable Long userId, @PathVariable Long groupId) {
-        try {
-            userGroupService.removeUserFromGroup(userId, groupId);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserNotFoundException | UserGroupNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userGroupService.removeUserFromGroup(userId, groupId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(BASE_URL + "/{groupId}/users")
     public ResponseEntity<Void> removeAllUsersFromGroup(@PathVariable Long groupId) {
-        try {
-            userGroupService.removeAllUsersFromGroup(groupId);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserGroupNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userGroupService.removeAllUsersFromGroup(groupId);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(BASE_URL + "/users/{userId}")
     public ResponseEntity<Void> removeUserFromAllGroups(@PathVariable Long userId) {
-        try {
-            userGroupService.removeUserFromAllGroups(userId);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userGroupService.removeUserFromAllGroups(userId);
+        return ResponseEntity.ok().build();
     }
 }
