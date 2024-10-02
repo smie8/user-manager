@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserGroupService {
+
     List<UserGroup> getAllUserGroups();
     Optional<UserGroup> getUserGroupById(Long id);
 
