@@ -18,4 +18,5 @@ public interface UserService {
 
     void addUserToGroup(Long userId, Long groupId);
     void removeUserFromGroup(Long userId, Long groupId);
+    void removeUserFromAllGroups(Long userId);
 }

@@ -94,6 +94,20 @@ public class UserServiceImpl implements UserService {
         userGroupRepository.save(userGroup);
     }
 
+    @Override
+    public void removeUserFromAllGroups(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id cannot be null");
+        }
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+        // Not the most efficient way to do this, but it works
+        for (UserGroup userGroup : userGroupRepository.findAll()) {
+            userGroup.getUsers().remove(user);
+            userGroupRepository.save(userGroup);
+        }
+    }
+
     private static void validateUserAndGroupId(Long userId, Long groupId) {
         if (userId == null) {
             throw new IllegalArgumentException("User id cannot be null");

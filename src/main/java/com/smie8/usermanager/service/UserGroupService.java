@@ -17,5 +17,4 @@ public interface UserGroupService {
     void addUserToGroup(Long userId, Long groupId);
     void removeUserFromGroup(Long userId, Long groupId);
     void removeAllUsersFromGroup(Long groupId);
-    void removeUserFromAllGroups(Long userId); // TODO: check if we need this
 }

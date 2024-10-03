@@ -104,17 +104,4 @@ public class UserGroupServiceImpl implements UserGroupService {
         userGroup.getUsers().clear();
         userGroupRepository.save(userGroup);
     }
-
-    @Override
-    public void removeUserFromAllGroups(Long userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("User id cannot be null");
-        }
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
-        for (UserGroup userGroup : userGroupRepository.findAll()) {
-            userGroup.getUsers().remove(user);
-            userGroupRepository.save(userGroup);
-        }
-    }
 }

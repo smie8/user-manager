@@ -1,7 +1,10 @@
 package com.smie8.usermanager.service;
 
 import com.smie8.usermanager.model.User;
+import com.smie8.usermanager.model.UserGroup;
+import com.smie8.usermanager.repository.UserGroupRepository;
 import com.smie8.usermanager.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,11 +24,32 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
+    public static final long USER_ID = 1L;
+    public static final long GROUP_ID = 2L;
+    public static final long GROUP_ID_2 = 3L;
+
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserGroupRepository userGroupRepository;
 
     @InjectMocks
     private UserServiceImpl userService;
+
+    private User user;
+    private UserGroup userGroup;
+    private UserGroup userGroup2;
+
+    @BeforeEach
+    public void setUp() {
+        user = new User();
+        user.setId(USER_ID);
+
+        userGroup = new UserGroup();
+        userGroup.setId(GROUP_ID);
+        userGroup2 = new UserGroup();
+        userGroup2.setId(GROUP_ID_2);
+    }
 
     @Test
     public void testGetAllUsers() {
@@ -53,24 +77,24 @@ class UserServiceImplTest {
     @Test
     public void testGetUserById() {
         User user = new User();
-        user.setId(1L);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        user.setId(USER_ID);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
 
-        Optional<User> result = userService.getUserById(1L);
+        Optional<User> result = userService.getUserById(USER_ID);
 
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(USER_ID);
         assertNotNull(result);
         assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getId());
+        assertEquals(USER_ID, result.get().getId());
     }
 
     @Test
     public void testGetUserByIdNotFound() {
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
 
-        Optional<User> result = userService.getUserById(1L);
+        Optional<User> result = userService.getUserById(USER_ID);
 
-        verify(userRepository).findById(1L);
+        verify(userRepository).findById(USER_ID);
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
@@ -102,20 +126,70 @@ class UserServiceImplTest {
 
     @Test
     public void testDeleteUser() {
-        when(userRepository.existsById(1L)).thenReturn(true);
-        userService.deleteUser(1L);
+        when(userRepository.existsById(USER_ID)).thenReturn(true);
+        userService.deleteUser(USER_ID);
 
-        verify(userRepository).deleteById(1L);
+        verify(userRepository).deleteById(USER_ID);
     }
 
     @Test
     public void testDeleteUserNotFound() {
-        when(userRepository.existsById(1L)).thenReturn(false);
+        when(userRepository.existsById(USER_ID)).thenReturn(false);
 
         try {
-            userService.deleteUser(1L);
+            userService.deleteUser(USER_ID);
         } catch (Exception e) {
             assertEquals("Could not find user 1", e.getMessage());
         }
+    }
+
+    @Test
+    public void testAddUserToGroup() {
+        User user = new User();
+        user.setId(USER_ID);
+        UserGroup userGroup = new UserGroup();
+        userGroup.setId(GROUP_ID);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+        when(userGroupRepository.findById(GROUP_ID)).thenReturn(Optional.of(userGroup));
+
+        userService.addUserToGroup(USER_ID, GROUP_ID);
+
+        verify(userRepository).findById(USER_ID);
+        verify(userGroupRepository).findById(GROUP_ID);
+        assertTrue(userGroup.getUsers().contains(user));
+    }
+
+    @Test
+    public void testRemoveUserFromGroup() {
+        User user = new User();
+        user.setId(USER_ID);
+        UserGroup userGroup = new UserGroup();
+        userGroup.setId(GROUP_ID);
+        userGroup.getUsers().add(user);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+        when(userGroupRepository.findById(GROUP_ID)).thenReturn(Optional.of(userGroup));
+
+        userService.removeUserFromGroup(USER_ID, GROUP_ID);
+
+        verify(userRepository).findById(USER_ID);
+        verify(userGroupRepository).findById(GROUP_ID);
+        assertTrue(userGroup.getUsers().isEmpty());
+    }
+
+    @Test
+    public void removeUserFromAllGroups() {
+        userGroup.getUsers().add(user);
+        userGroup2.getUsers().add(user);
+        assert(userGroup.getUsers().contains(user));
+        assert(userGroup2.getUsers().contains(user));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+        when(userGroupRepository.findAll()).thenReturn(List.of(userGroup, userGroup2));
+
+        userService.removeUserFromAllGroups(USER_ID);
+
+        verify(userRepository).findById(USER_ID);
+        verify(userGroupRepository).findAll();
+        assertTrue(userGroup.getUsers().isEmpty());
+        assertTrue(userGroup2.getUsers().isEmpty());
     }
 }

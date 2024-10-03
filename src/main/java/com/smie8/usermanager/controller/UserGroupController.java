@@ -75,11 +75,4 @@ public class UserGroupController {
         userGroupService.removeAllUsersFromGroup(groupId);
         return ResponseEntity.ok().build();
     }
-
-    @Operation(summary = "Remove user from all groups")
-    @DeleteMapping(BASE_URL + "/users/{userId}")
-    public ResponseEntity<Void> removeUserFromAllGroups(@PathVariable Long userId) {
-        userGroupService.removeUserFromAllGroups(userId);
-        return ResponseEntity.ok().build();
-    }
 }
